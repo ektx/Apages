@@ -1,0 +1,89 @@
+<div class="a-pages-mod">
+	<div class="pages-mod" ng-if="type != 'min'">
+		<button class="top-btn" ng-click="top()" ng-disabled="current == 1">
+			<svg t="1531709579753" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1333" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<path d="M720.896 901.12c-41.984-44.032-58.368-62.464-99.328-106.496-77.824-83.968-155.648-166.912-232.448-250.88-23.552-25.6-23.552-38.912 0-63.488l337.92-365.568c10.24-11.264 35.84-18.432 51.2-7.168 9.216 8.192 15.36 27.648-8.192 53.248C673.792 265.216 577.536 368.64 481.28 472.064c-30.72 33.792-30.72 45.056 0 77.824C577.536 654.336 672.768 757.76 769.024 862.208c23.552 24.576 15.36 48.128 6.144 54.272-16.384 9.216-29.696 8.192-54.272-15.36zM238.592 874.496V149.504c0-20.48 16.384-46.08 34.816-46.08 18.432 0 34.816 27.648 34.816 48.128-1.024 241.664-1.024 483.328 0 724.992 0 20.48-7.168 45.056-35.84 45.056-27.648 0-33.792-26.624-33.792-47.104z" fill="" p-id="1334"></path>
+			</svg>
+		</button>
+		<button class="apages-prev-btn" ng-click="prev()" ng-disabled="current == 1">
+			<svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink" ><path d="M532.526499 904.817574L139.506311 511.797385 532.526499 118.777197c12.258185-12.258185 12.432147-32.892131-0.187265-45.51052-12.707416-12.707416-32.995485-12.703323-45.511543-0.187265L75.166957 484.739123c-7.120165 7.120165-10.163477 17.065677-8.990768 26.624381-1.500167 9.755178 1.5104 20.010753 8.990768 27.491121l411.660734 411.660734c12.258185 12.258185 32.892131 12.432147 45.511543-0.187265 12.707416-12.707416 12.7023-32.995485 0.187265-45.51052z"></path></svg>
+		</button>
+		<ul class="apages-ul">
+			<li class="apages-li" ng-repeat="item in list" ng-click="goTo(item.label)" ng-class="{'current': item.style}">{{item.label}}</li>
+		</ul>
+		<button class="next-btn" ng-click="next()" ng-disabled="current == totalPages">
+			<svg t="1531709209411" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1041" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M492.675886 904.817574L885.696074 511.797385 492.675886 118.777197c-12.258185-12.258185-12.432147-32.892131 0.187265-45.51052 12.707416-12.707416 32.995485-12.703323 45.511543-0.187265l411.660734 411.660734c7.120165 7.120165 10.163477 17.065677 8.990768 26.624381 1.500167 9.755178-1.5104 20.010753-8.990768 27.491121L538.374694 950.515359c-12.258185 12.258185-32.892131 12.432147-45.511543-0.187265-12.707416-12.707416-12.703323-32.995485-0.187265-45.51052z" p-id="1042"></path></svg>
+		</button>
+		<button class="bottom-btn" ng-click="bottom()" ng-disabled="current == totalPages">
+			<svg t="1531709518837" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1115" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M303.104 122.88c41.984 44.032 58.368 62.464 99.328 106.496 77.824 82.944 154.624 166.912 232.448 250.88 23.552 25.6 23.552 38.912 0 63.488L296.96 909.312c-10.24 11.264-35.84 18.432-51.2 7.168-9.216-8.192-15.36-27.648 8.192-53.248C350.208 758.784 446.464 655.36 542.72 551.936c30.72-33.792 30.72-45.056 0-77.824C446.464 369.664 351.232 266.24 254.976 161.792c-23.552-24.576-15.36-48.128-6.144-54.272 16.384-9.216 29.696-8.192 54.272 15.36zM785.408 149.504v724.992c0 20.48-16.384 46.08-34.816 46.08-18.432 0-34.816-27.648-34.816-48.128 1.024-241.664 1.024-483.328 0-724.992 0-20.48 7.168-45.056 35.84-45.056 27.648 0 33.792 26.624 33.792 47.104z" fill="" p-id="1116"></path></svg>
+		</button>
+	</div>
+
+	<div ng-class="{'page-min-box': 1, 'show': type != 'pages'}">
+		<input class="apages-current-box" type="number" ng-model="current"> /
+		<span class="apages-total-box">{{totalPages}}</span>
+	</div>
+	
+</div>
+
+<style type="text/css">
+	.a-pages-mod {
+		font-size: 0;
+	}
+	.a-pages-mod .pages-mod {
+		display: inline-block;
+	}
+	.a-pages-mod span {
+		font-size: 12px;
+		color: #333;
+	}
+	.a-pages-mod button svg {
+		width: 12px;
+		fill: #333;
+	}
+	.a-pages-mod button {
+		width: 12px;
+		margin: 0 .5em;
+		border: none;
+		background: transparent;
+		cursor: pointer;
+		outline: none;
+	}
+	.a-pages-mod button:not([disabled]):hover path {
+		fill: #2196F3;
+	}
+	.a-pages-mod button[disabled] path {
+		fill: #aaa;
+	}
+
+	.a-pages-mod .apages-ul {
+		display: inline-block;
+	}
+	.a-pages-mod .apages-li {
+		display: inline-block;
+		list-style: none;
+		padding: .3em .5em;
+		color: #444;
+		font-size: 13px;
+		cursor: pointer;
+	}
+	.a-pages-mod .apages-li.current {
+		color: #2196F3
+	}
+	.a-pages-mod .page-min-box {
+		display: none;
+		font-size: 14px;
+	}
+	.a-pages-mod .page-min-box.show {
+		display: inline-block;
+	}
+	.a-pages-mod .apages-current-box {
+		width: 3em;
+		text-align: right;
+		border: 1px solid #ddd;
+		border-radius: 3px;
+	}
+	.a-pages-mod .pages-mod + .page-min-box {
+		margin-left: 1.5em;
+	}
+</style>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>angular pages</title>
+	<style type="text/css">
+		body, button, div, ul, li {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			padding: 3em;
+		}
+	</style>
+</head>
+<body ng-controller="myController">
+	<p>{{data |json}}</p>
+
+	<div class="pages-box">
+		<h3>完全形式</h3>
+		<p>每页 10 条，共 {{total}} 条数据， {{onePages}} 页，当前第 {{oneCurrent}} 页</p>
+		<a-pages ng-total="total" ng-current="oneCurrent" ng-page-size="10" on-change="rootChange(page)"></a-pages>
+	</div>
+	
+
+	<div class="pages-box">
+		<h3>只有分页</h3>
+		<p>每页 30 条，共 {{total}} 条数据， {{twoPages}} 页，当前第 {{twoCurrent}} 页</p>
+		<div a-pages ng-total="total" ng-current="twoCurrent" ng-page-size="30" ng-type="'pages'"></div>
+	</div>
+
+	<div class="pages-box">
+		<h3>迷你状态</h3>
+		<p>每页 60 条，共 {{total}} 条数据， {{threePages}} 页，当前第 {{threeCurrent}} 页</p>
+		<a-pages ng-total="total" ng-current="threeCurrent" ng-page-size="60" ng-type="'min'"></a-pages>
+	</div>
+
+	<p>请输入数据量，观察分页效果: <input type="number" ng-model="total"></p>
+	
+
+    <script src="../angular.min.js"></script>
+</body>
+<script type="text/javascript">
+angular.module('app', [])
+	.directive('aPages', function () {
+		return {
+			restrict: 'EA',
+			scope: {
+				total: '=ngTotal',
+				ngCurrent: '=',
+				size: '=ngPageSize',
+				// 分页类型 ['all', 'pages', 'min']
+				type: '=ngType',
+				onChange: '&'
+			},
+			link: function(scope, element, attrs) {
+				// 分页列表
+				scope.filter = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
+				scope.list = []
+
+				scope.top = function () {
+					scope.current = 1
+				}
+
+				scope.prev = function () {
+					if (scope.current > 1) {
+						scope.current--
+					}
+				}
+
+				scope.next = function () {
+					if (scope.current < scope.totalPages) {
+						scope.current++
+					}
+				}
+
+				scope.bottom = function () {
+					scope.current = scope.totalPages
+				}
+
+				scope.goTo = function (val) {
+					if (val !== scope.current) scope.current = val
+				}
+
+				scope.generateList = function () {
+					var now = scope.current
+
+					// 分页数字表处理
+					scope.list = scope.filter.map(function(val) {
+						var _v = now + val
+						return {
+							label: _v,
+							style: _v == now
+						}
+					})
+
+					// 截取位置计算
+					var s = now <= 4 ? 5 - now +1 : 3
+
+					if (scope.totalPages > 5 && now + 2 > scope.totalPages) {
+						s = scope.totalPages - now + 1
+					}
+
+					scope.list = scope.list.slice(s, s+(scope.totalPages > 5 ? 5 : scope.totalPages))
+				}
+
+				scope.$watch('current', function(now, old) {
+					// 过滤空内容
+					if (!now) return
+					// 字符转数字
+					now = parseInt(now)
+
+					// 控制输入内容的合法性
+					if (now > scope.totalPages) scope.current = scope.totalPages
+					else if (now < 1) scope.current = 1
+					// 输出返回当前页数
+					scope.ngCurrent = now
+
+					scope.generateList()
+
+					scope.onChange({page:now})
+				})
+
+				scope.$watch('total', function (now, old) {
+					// 计算总页数
+					scope.totalPages = Math.ceil(scope.total / scope.size)
+					
+					scope.current = scope.ngCurrent
+
+					scope.generateList()
+					
+				})
+				
+			},
+			// 注意修改你的路径
+			templateUrl: '../APages.html'
+		}
+	})
+	.controller('myController', function($scope) {
+		$scope.total = 100
+		$scope.oneCurrent = 1
+		$scope.onePages = Math.ceil($scope.total / 10)
+		$scope.twoCurrent = 2
+		$scope.twoPages = Math.ceil($scope.total / 30)
+		$scope.threeCurrent = 1
+		$scope.threePages = Math.ceil($scope.total / 60)
+
+		$scope.totalPages = 1000
+
+		$scope.$watch('total', function (now, old) {
+			$scope.onePages = Math.ceil(now / 10)
+			$scope.twoPages = Math.ceil(now / 30)
+			$scope.threePages = Math.ceil(now / 60)
+		})
+
+		// 回调示例
+		$scope.rootChange = function(page) {
+			console.log('现在是第'+ page)
+		}
+	})
+</script>
+</html>
