@@ -9,7 +9,7 @@
 
 1. 添加 Directive
 
-  ```javascript
+```javascript
    angular
    .directive('aPages', function () {
     return {
@@ -92,16 +92,13 @@
       templateUrl: '../APages.html'
     }
   })
-   ```
+```
 
 2. 页面使用
 
 ```html
 <a-pages ng-total="total" ng-type="'all'" ng-current="oneCurrent" ng-page-size="10" on-change="rootChange(page)"></a-pages>
 ```
-
-   ngStepsData 接受一个数组内容。
-
 
 
 ## 属性说明
