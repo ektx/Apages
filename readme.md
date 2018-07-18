@@ -1,6 +1,8 @@
 # ASteps
 
-用于 AngularJs 1.x 中的流程导航功能。
+angular 1.x pages directive(angular 1 分页指令)
+
+[Github](https://github.com/ektx/Apages)  
 
 ## 效果展示
 <img src="effect/1.png" style="width: 300px">
@@ -114,4 +116,3 @@
 | 方法 | 说明 |  
 | --- | --- |
 | on-change | 分页变化后事件，返回当前页数(page) |
-
